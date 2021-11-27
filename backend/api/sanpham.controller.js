@@ -68,7 +68,7 @@ export default class SanphamController {
       const hang = req.body.hang
       const loaiSP_id = req.body.loaiSP_id
 
-      // Send to LoaiSpDAO.addLoaiSp(...)
+      // Send to SanphamDAO.addSanpham(...)
       const sanphamResponse = await SanphamDAO.addSanpham(
         tenSP, phanloai, giam, mota, soluong, hang, loaiSP_id
       )
@@ -92,7 +92,7 @@ export default class SanphamController {
       const hang = req.body.hang
       const loaiSP_id = req.body.loaiSP_id
 
-      // Send to LoaiSpDAO.updateLoaiSp(...)
+      // Send to SanphamDAO.updateSanpham(...)
       const sanphamResponse = await SanphamDAO.updateSanpham(
         sanphamID,
         tenSP, phanloai, giam, mota, soluong, hang, loaiSP_id

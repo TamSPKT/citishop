@@ -143,13 +143,13 @@ export default class SanphamDAO {
           $set: {
             tenSP: tenSP,
             phanloai: phanloai,
-            giam: giam,
+            '%giam': giam,
             mota: mota,
             soluong: soluong,
             hang: hang,
             loaiSP_id: new ObjectId(loaiSP_id)
           }
-        }, // Set new 'tenloaiSp' and 'mota'
+        }, // Set new values
       )
       return updateResponse
     } catch (e) {

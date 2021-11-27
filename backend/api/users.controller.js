@@ -80,7 +80,7 @@ export default class UsersController {
       const diachi = req.body.diachi
       const phanquyen = req.body.phanquyen
 
-      // Send to LoaiSpDAO.addLoaiSp(...)
+      // Send to UsersDAO.addUser(...)
       const userResponse = await UsersDAO.addUser(
         username, password, email, sdt, gioitinh, ngaysinh, diachi, phanquyen
       )
@@ -104,7 +104,7 @@ export default class UsersController {
       const diachi = req.body.diachi
       const phanquyen = req.body.phanquyen
 
-      // Send to LoaiSpDAO.updateLoaiSp(...)
+      // Send to UsersDAO.updateUser(...)
       const userResponse = await UsersDAO.updateUser(
         username,
         password, email, sdt, gioitinh, ngaysinh, diachi, phanquyen
@@ -127,7 +127,7 @@ export default class UsersController {
       // 'username' from parameter in URL "/:username"
       let username = req.params.username || {}
       console.log('- Delete user username: ' + username)
-      // Send to LoaiSpDAO.deleteLoaiSp(...)
+      // Send to UsersDAO.deleteUser(...)
       const userResponse = await UsersDAO.deleteUser(
         username
       )
