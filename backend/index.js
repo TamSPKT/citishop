@@ -6,6 +6,8 @@ import UsersDAO from "./dao/usersDAO.js"
 import SanphamDAO from "./dao/sanphamDAO.js"
 import ReviewsDAO from "./dao/reviewsDAO.js"
 import KhuyenmaiDAO from "./dao/khuyenmaiDAO.js"
+import HoadonDAO from "./dao/hoadonDAO.js"
+import ThongkeDAO from "./dao/thongkeDAO.js"
 dotenv.config() // Load enviroment variables
 const MongoClient = mongodb.MongoClient
 
@@ -30,6 +32,8 @@ MongoClient.connect(
     await SanphamDAO.injectDB(client)
     await ReviewsDAO.injectDB(client)
     await KhuyenmaiDAO.injectDB(client)
+    await HoadonDAO.injectDB(client)
+    await ThongkeDAO.injectDB(client)
     app.listen(port, () => {
       console.log(`- listening on port ${port}`)
     })

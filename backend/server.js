@@ -4,6 +4,8 @@ import loaiSp from "./api/loaiSp.route.js"
 import users from "./api/users.route.js"
 import sanphamAndReviews from "./api/sanphamAndReviews.route.js"
 import khuyenmai from "./api/khuyenmai.route.js"
+import hoadon from "./api/hoadon.route.js"
+import thongke from "./api/thongke.route.js"
 
 const app = express() // Use to make our server
 
@@ -16,6 +18,8 @@ app.use("/api/v1/loaiSP", loaiSp)
 app.use("/api/v1/users", users)
 app.use("/api/v1/sanpham", sanphamAndReviews)
 app.use("/api/v1/khuyenmai", khuyenmai)
+app.use("/api/v1/hoadon", hoadon)
+app.use("/api/v1/thongke", thongke)
 app.use("*", (req, res) => res.status(404).json({ error: "not found" }))
 
 export default app
