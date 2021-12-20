@@ -61,7 +61,10 @@ export default class SanphamController {
     try {
       // Get info from the body of the request
       const tenSP = req.body.tenSP
-      const phanloai = req.body.phanloai
+      const loai = req.body.loai
+      const gia = req.body.gia
+      const hinhanh = req.body.hinhanh
+      // const phanloai = req.body.phanloai
       const giam = req.body.giam
       const mota = req.body.mota
       const soluong = req.body.soluong
@@ -70,7 +73,7 @@ export default class SanphamController {
 
       // Send to SanphamDAO.addSanpham(...)
       const sanphamResponse = await SanphamDAO.addSanpham(
-        tenSP, phanloai, giam, mota, soluong, hang, loaiSP_id
+        tenSP, loai, gia, hinhanh, giam, mota, soluong, hang, loaiSP_id
       )
       // Return success if it's worked
       res.json({ status: "success", response: sanphamResponse })
@@ -85,7 +88,10 @@ export default class SanphamController {
       let sanphamID = req.params.id || {}
       // Get info from the body of the request
       const tenSP = req.body.tenSP
-      const phanloai = req.body.phanloai
+      const loai = req.body.loai
+      const gia = req.body.gia
+      const hinhanh = req.body.hinhanh
+      // const phanloai = req.body.phanloai
       const giam = req.body.giam
       const mota = req.body.mota
       const soluong = req.body.soluong
@@ -95,7 +101,7 @@ export default class SanphamController {
       // Send to SanphamDAO.updateSanpham(...)
       const sanphamResponse = await SanphamDAO.updateSanpham(
         sanphamID,
-        tenSP, phanloai, giam, mota, soluong, hang, loaiSP_id
+        tenSP, loai, gia, hinhanh, giam, mota, soluong, hang, loaiSP_id
       )
 
       var { error } = sanphamResponse
@@ -116,10 +122,10 @@ export default class SanphamController {
       let sanphamID = req.params.id || {}
       console.log('- Delete Sanpham id: ' + sanphamID)
       // Send to SanphamDAO.deleteSanpham(...)
-      const loaiSpResponse = await SanphamDAO.deleteSanpham(
+      const hoadonResponse = await SanphamDAO.deleteSanpham(
         sanphamID
       )
-      res.json({ status: "success", response: loaiSpResponse })
+      res.json({ status: "success", response: hoadonResponse })
     } catch (e) {
       res.status(500).json({ error: e.message })
     }

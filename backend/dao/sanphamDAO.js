@@ -113,12 +113,14 @@ export default class SanphamDAO {
   }
 
   static async addSanpham(
-    tenSP, phanloai = [], giam = 0, mota, soluong = 0, hang, loaiSP_id
+    tenSP, loai, gia = 0, hinhanh, giam = 0, mota, soluong = 0, hang, loaiSP_id
   ) {
     try {
       const sanphamDoc = {
         tenSP: tenSP,
-        phanloai: phanloai,
+        loai: loai,
+        gia: gia,
+        hinhanh: hinhanh,
         '%giam': giam,
         mota: mota,
         soluong: soluong,
@@ -134,7 +136,7 @@ export default class SanphamDAO {
 
   static async updateSanpham(
     sanphamID,
-    tenSP, phanloai = [], giam = 0, mota, soluong = 0, hang, loaiSP_id
+    tenSP, loai, gia = 0, hinhanh, giam = 0, mota, soluong = 0, hang, loaiSP_id
   ) {
     try {
       const updateResponse = await sanpham.updateOne(
@@ -142,7 +144,9 @@ export default class SanphamDAO {
         {
           $set: {
             tenSP: tenSP,
-            phanloai: phanloai,
+            loai: loai,
+            gia: gia,
+            hinhanh: hinhanh,
             '%giam': giam,
             mota: mota,
             soluong: soluong,
@@ -170,6 +174,10 @@ export default class SanphamDAO {
     }
   }
 
+  /**
+   * Tìm và trả về danh sách các hãng sản phẩm có trong database
+   * @returns
+   */
   static async getHangList() {
     let hang = []
     try {
