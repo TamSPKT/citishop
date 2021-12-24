@@ -21,7 +21,7 @@ export default class UsersController {
     })
 
     let response = {
-      loaiSp: usersList,
+      users: usersList,
       page: page,
       filters: filters,
       entries_per_page: usersPerPage,
