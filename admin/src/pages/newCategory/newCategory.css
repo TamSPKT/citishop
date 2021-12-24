@@ -1,0 +1,78 @@
+.newCategory {
+    flex: 4;
+  }
+  
+  .newCategoryForm {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .newCategoryDesc{
+    width: 600px;
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+    margin-right: 20px;
+
+  }
+  .newCategoryDesc > label {
+    margin-bottom: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    color: rgb(151, 150, 150);
+  }
+  .newCategoryDesc > input {
+    height: 50px;
+    padding: 10px;
+    border: 1px solid gray;
+    border-radius: 5px;
+  }
+  
+  .newCategoryItem {
+    width: 600px;
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+    margin-right: 20px;
+  }
+  
+  .newCategoryItem > label {
+    margin-bottom: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    color: rgb(151, 150, 150);
+  }
+  
+  .newCategoryItem > input {
+    height: 20px;
+    padding: 10px;
+    border: 1px solid gray;
+    border-radius: 5px;
+  }
+  
+  .newCategoryGender > input {
+    margin-top: 15px;
+  }
+  
+  .newCategoryGender>label{
+      margin: 10px;
+      font-size: 18px;
+      color: #555;
+  }
+  
+  .newCategorySelect{
+      height: 40px;
+      border-radius: 5px;
+  }
+  
+  .newCategoryButton{
+      width: 600px;
+      border: none;
+      background-color: rgb(182, 38, 117);
+      color: white;
+      padding: 7px 10px;
+      font-weight: 600;
+      border-radius: 10px;
+      margin-top: 30px;
+      cursor: pointer;
+  }

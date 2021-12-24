@@ -1,0 +1,98 @@
+.newProduct {
+  flex: 4;
+}
+
+.addProductForm {
+  margin-top: 10px;
+
+}
+
+.addProductItem {
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+}
+
+.addProductItem > label {
+  color: gray;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.addProductItem > input {
+  padding: 10px;
+}
+
+.addProductItem > select {
+  padding: 10px;
+}
+
+.addProductButton {
+  width: 820px;
+  margin-top: 10px;
+  padding: 7px 10px;
+  border: none;
+  border-radius: 10px;
+  background-color: rgb(182, 38, 117);;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+}
+.newProduct {
+  flex: 4;
+}
+
+.newProductForm {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.newProductItem {
+  width: 400px;
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
+  margin-right: 20px;
+}
+
+.newProductItem > label {
+  margin-bottom: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  color: rgb(151, 150, 150);
+}
+
+.newProductItem > input {
+  height: 20px;
+  padding: 10px;
+  border: 1px solid gray;
+  border-radius: 5px;
+}
+
+.newProductGender > input {
+  margin-top: 15px;
+}
+
+.newProductGender>label{
+    margin: 10px;
+    font-size: 18px;
+    color: #555;
+}
+
+.newProductSelect{
+    height: 40px;
+    border-radius: 5px;
+}
+
+.newProductButton{
+    width: 800px;
+    border: none;
+    background-color: rgb(182, 38, 117);
+    color: white;
+    padding: 7px 10px;
+    font-weight: 600;
+    border-radius: 10px;
+    margin-top: 30px;
+    cursor: pointer;
+}

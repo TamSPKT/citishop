@@ -1,0 +1,36 @@
+.categoryList {
+    flex: 4;
+  }
+  
+  .categoryListUser {
+    display: flex;
+    align-items: center;
+  }
+  
+  .categoryListImg {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 10px;
+  }
+  .nameTitle{
+    padding-bottom: 10px;
+
+  }
+  .categoryListEdit{
+  
+      color: #1422a0;
+      cursor: pointer;
+      margin-right: 15px;
+  }
+  .categoryListSee{
+  
+    color: #1422a0;
+    cursor: pointer;
+    margin-right: 15px;
+}
+  .categoryListDelete{
+      color: red;
+      cursor: pointer;
+  }

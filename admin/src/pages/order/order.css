@@ -1,0 +1,225 @@
+.order {
+    flex: 4;
+    padding: 20px;
+  }
+  
+  .orderTitleContainer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .orderAddButton {
+    width: 80px;
+    border: none;
+    padding: 5px;
+    background-color: rgb(182, 38, 117);
+    border-radius: 5px;
+    cursor: pointer;
+    color: white;
+    font-size: 16px;
+  }
+  
+  .orderContainer {
+    display: flex;
+    margin-top: 20px;
+  }
+  .statusOrder{
+      width: 50px;
+  }
+  .orderButton{
+    width: 400px;
+    border: none;
+    margin-top:10px;
+    padding: 5px;
+    border-radius: 5px;
+    background-color: rgb(199, 29, 114);
+    color:white;
+    font-weight: 600;
+    cursor: pointer;
+ 
+  }
+  .orderShow {
+    flex: 1;
+    padding: 20px;
+    -webkit-box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
+    box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
+  }
+  
+  .orderUpdate {
+    flex: 2;
+    padding: 20px;
+    -webkit-box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
+    box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
+    margin-left: 20px;
+  }
+  
+  .orderShowTop {
+    display: flex;
+    align-items: center;
+  }
+  
+  .orderShowImg {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  
+  .orderShowTopTitle {
+    display: flex;
+    flex-direction: column;
+    margin-left: 20px;
+  }
+  
+  .orderShowOrdername {
+    font-weight: 600;
+  }
+  
+  .orderShowOrderTitle {
+    font-weight: 300;
+  }
+  
+  .orderShowBottom{
+      margin-top: 20px;
+  }
+  
+  .orderShowTitle {
+    font-size: 14px;
+    font-weight: 600;
+    color: rgb(175, 170, 170);
+  }
+  
+  .orderShowInfo{
+      display: flex;
+      align-items: center;
+      margin: 20px 0px;
+      color: #444;
+  }
+  
+  .orderShowIcon{
+      font-size: 16px !important;
+  }
+  
+  .orderShowInfoTitle{
+      margin-left: 10px;
+  }
+  
+  .orderUpdateTitle{
+      font-size: 24px;
+      font-weight: 600;
+  }
+  
+  .orderUpdateForm{
+      display: flex;
+      justify-content: space-between;
+      margin-top: 20px;
+  }
+  
+  .orderUpdateItem{
+      display: flex;
+      flex-direction: column;
+      margin-top: 10px;
+  }
+  
+  .orderUpdateItem>label{
+      margin-bottom: 5px;
+      font-size: 14px;
+  }
+  
+  .orderUpdateInput{
+      border: none;
+      width: 250px;
+      height: 30px;
+      border-bottom: 1px solid gray;
+  }
+  
+  .orderUpdateRight{
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+  }
+  
+  .orderUpdateUpload{
+      display: flex;
+      align-items: center;
+  }
+  
+  .orderUpdateImg{
+      width: 100px;
+      height: 100px;
+      border-radius: 10px;
+      object-fit: cover;
+      margin-right: 20px;
+  }
+  
+  .orderUpdateIcon{
+      cursor: pointer;
+  }
+  
+  .orderUpdateButton{
+      border-radius: 5px;
+      border: none;
+      padding: 5px;
+      cursor: pointer;
+      background-color: darkblue;
+      color: white;
+      font-weight: 600;
+  }
+  .editOrder {
+    flex: 4;
+  }
+  
+  .editOrderForm {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  .editOrderItem {
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+    margin-right: 20px;
+  }
+  
+  .editOrderItem > label {
+    margin-bottom: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    color: rgb(151, 150, 150);
+  }
+  
+  .editOrderItem > input {
+    height: 20px;
+    padding: 10px;
+    border: 1px solid gray;
+    border-radius: 5px;
+  }
+  
+  .editOrderGender > input {
+    margin-top: 15px;
+  }
+  
+  .editOrderGender>label{
+      margin: 10px;
+      font-size: 18px;
+      color: #555;
+  }
+  
+  .editOrderSelect{
+      height: 40px;
+      border-radius: 5px;
+  }
+  
+  .editOrderButton{
+      width: 400px;
+      border: none;
+      background-color: rgb(182, 38, 117);
+      color: white;
+      padding: 7px 10px;
+      font-weight: 600;
+      border-radius: 10px;
+      margin-top: 30px;
+      cursor: pointer;
+  }
