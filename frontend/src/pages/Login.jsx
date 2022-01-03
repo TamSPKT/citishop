@@ -4,6 +4,7 @@ import { login } from "../redux/apis/apiLogin";
 import { mobile } from "../responsive";
 import { useDispatch, useSelector } from "react-redux";
 import Navbar from "../components/Navbar";
+import { useHistory } from "react-router-dom";
 
 const Container = styled.div`
   width: 100vw;
@@ -71,14 +72,15 @@ const Error = styled.span`
 `;
 
 const Login = () => {
+  const history = useHistory();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
   const { currentUser, isFetching, error } = useSelector((state) => state.user);
 
   useEffect(() => {
-    if (!error && !isFetching) {
-      alert("Đăng nhập thành công");
+    if (!error && !isFetching && currentUser) {
+      history.push('/');
     }
   }, [currentUser])
 
@@ -87,6 +89,9 @@ const Login = () => {
     // console.log(username, password);
     login(dispatch, { username, password });
     // console.log(currentUser, isFetching, error);
+    if (!error && !isFetching && currentUser) {
+      history.push('/');
+    }
   };
 
   return (

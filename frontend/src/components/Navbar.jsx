@@ -3,8 +3,8 @@ import { Search, ShoppingCartOutlined } from "@material-ui/icons";
 import React from "react";
 import styled from "styled-components";
 import { mobile } from "../responsive";
-import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useHistory } from "react-router-dom";
 
 import logo from "../assets/images/logo.png";
 const Container = styled.div`
@@ -55,8 +55,10 @@ align-items: center;
 const Logo = styled.img`
 width: 80px;
 height: 45px;
-  ${mobile({ width: '50px',
-    height: '30px' })}
+  ${mobile({
+  width: '50px',
+  height: '30px'
+})}
 `;
 const Right = styled.div`
   flex: 1;
@@ -75,7 +77,19 @@ const MenuItem = styled.div`
 `;
 
 const Navbar = () => {
-  const quantity = useSelector(state=>state.cart.quantity)
+  const history = useHistory();
+  const quantity = useSelector(state => state.cart.quantity);
+  const user = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+
+  const handleLogout = (e) => {
+    // e.preventDefault();
+    // console.log(user.currentUser);
+    localStorage.removeItem('persist:root');
+    // console.log(user.currentUser);
+    window.location.reload()
+  }
+
   return (
     <Container>
       <Wrapper>
@@ -83,33 +97,37 @@ const Navbar = () => {
           <Link to="/">
             <Logo src={logo} alt="" />
           </Link>
-          
+
         </Left>
         <Center>
           <SearchContainer>
             <Input placeholder="Tìm kiếm..." />
             <Link to="/result">
-              <Search style={{ color: "gray", fontSize: 16 }} />           
-            </Link>     
+              <Search style={{ color: "gray", fontSize: 16 }} />
+            </Link>
           </SearchContainer>
         </Center>
         <Right>
-          
-          
-          <Link to="/register"> 
-            <MenuItem>Đăng ký</MenuItem>
-            
-          </Link> 
-          <Link to="/login">
-            <MenuItem>Đăng nhập</MenuItem>
-            
-          </Link>          
+          {user.currentUser
+            ? <>
+              <strong>{user.currentUser.username}</strong>
+              <MenuItem onClick={handleLogout}>Đăng xuất</MenuItem>
+            </>
+            : <>
+              <Link to="/register">
+                <MenuItem>Đăng ký</MenuItem>
+              </Link>
+              <Link to="/login">
+                <MenuItem>Đăng nhập</MenuItem>
+              </Link></>
+          }
+
           <Link to="/cart">
-          <MenuItem>
-            <Badge badgeContent={quantity} color="primary">
-              <ShoppingCartOutlined />
-            </Badge>
-          </MenuItem>
+            <MenuItem>
+              <Badge badgeContent={quantity} color="primary">
+                <ShoppingCartOutlined />
+              </Badge>
+            </MenuItem>
           </Link>
           {/* <Language>EN</Language>*/}
         </Right>

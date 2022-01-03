@@ -14,7 +14,7 @@ export const login = async (dispatch, user) => {
         throw e;
       })
     // console.log(result, user)
-    if (!result || result.password !== user.password) {
+    if (!result || result.password !== user.password || !result.phanquyen) {
       throw new Error()
     }
 

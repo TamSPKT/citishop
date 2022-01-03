@@ -1,6 +1,9 @@
 import styled from "styled-components";
 import { mobile } from "../responsive";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import { register } from "../redux/apis/apiRegister";
 
 const Container = styled.div`
   width: 100vw;
@@ -55,23 +58,102 @@ const Button = styled.button`
   cursor: pointer;
 `;
 
+const Error = styled.span`
+  color: red;
+`;
 
 const Register = () => {
+  const history = useHistory();
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [passwordRe, setPasswordRe] = useState("");
+  const [phone, setPhone] = useState("");
+  const [address, setAddress] = useState("");
+  const dispatch = useDispatch();
+  const { currentUser, isFetching, error } = useSelector((state) => state.user);
+
+  const [passwordErrorStyle, setPasswordErrorStyle] = useState(undefined);
+
+  useEffect(() => {
+    if (password !== passwordRe) {
+      setPasswordErrorStyle({ color: "red" });
+    } else {
+      setPasswordErrorStyle(undefined);
+    }
+  }, [password, passwordRe])
+
+  useEffect(() => {
+    if (!error && !isFetching && currentUser) {
+      history.push('/');
+    }
+  }, [currentUser])
+
+  const handleClick = (e) => {
+    e.preventDefault();
+    if (passwordErrorStyle) {
+      return;
+    }
+    let userData = {
+      username: username,
+      password: password,
+      email: email,
+      sdt: phone,
+      diachi: address,
+      phanquyen: 1, // Active
+    };
+    // console.log(userData);
+    register(dispatch, userData);
+    // console.log(currentUser, isFetching, error);
+    if (!error && !isFetching && currentUser) {
+      history.push('/');
+    }
+  };
+
   return (
     <Container>
       <Wrapper>
         <Title>ĐĂNG KÝ</Title>
-        <Form>
-          <Input placeholder="Tên" />
-          <Input placeholder="Tên Đăng Nhập" />
-          <Input placeholder="Mật Khẩu" />
-          <Input placeholder="Xác nhận mật khẩu" />
-          <Input placeholder="Số điện thoại" />
-          <Input placeholder="Địa Chỉ" />
+        <Form onSubmit={handleClick}>
+          <Input
+            placeholder="Tên Đăng Nhập"
+            required
+            onChange={(e) => setUsername(e.target.value)} />
+          <Input
+            placeholder="Email"
+            required
+            type="email"
+            onChange={(e) => setEmail(e.target.value)} />
+          <Input
+            placeholder="Mật Khẩu"
+            required
+            style={passwordErrorStyle}
+            type="password"
+            onChange={(e) => setPassword(e.target.value)} />
+          <Input
+            placeholder="Xác nhận mật khẩu"
+            required
+            style={passwordErrorStyle}
+            type="password"
+            onChange={(e) => setPasswordRe(e.target.value)} />
+          <Input
+            placeholder="Số điện thoại"
+            required
+            type="tel"
+            pattern="^((09|03|07|08|05)+([0-9]{8})\b)$"
+            onChange={(e) => setPhone(e.target.value)} />
+          <Input
+            placeholder="Địa chỉ"
+            required
+            type="text"
+            onChange={(e) => setAddress(e.target.value)} />
           <Agreement>
-          Tôi đồng ý thực hiện mọi giao dịch mua bán theo điều kiện sử dụng và chính sách của CiTiShop
+            Tôi đồng ý thực hiện mọi giao dịch mua bán theo điều kiện sử dụng và chính sách của CiTiShop
           </Agreement>
-          <Button>ĐĂNG KÝ</Button>
+          {error && <Error>Lỗi đăng ký</Error>}
+          <Button type="submit" disabled={isFetching}>
+            ĐĂNG KÝ
+          </Button>
           <div>Bạn đã có tài khoản?</div>
           <Link to="/login">
             <div> Đăng nhập</div>
