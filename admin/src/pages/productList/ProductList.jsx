@@ -15,8 +15,19 @@ export default function ProductList() {
   const [page, setPage] = useState(0);
   const [loading, setLoading] = useState(false);
 
-  const handleDelete = (id) => {
-    setSanphamList(sanphamList.filter((item) => item._id !== id));
+  const handleDelete = (id, name) => {
+    if (window.confirm(`Bạn có chắc chắn muốn xoá Sản phẩm ${name}, ID ${id}?`)) {
+      SanphamDataService.deleteSanpham(id)
+        .then(res => {
+          if (res.data.response && res.data.response.deletedCount !== 0) {
+            window.location.reload();
+          }
+        })
+        .catch((e) => {
+          console.log(e);
+        })
+    }
+    // setSanphamList(sanphamList.filter((item) => item._id !== id));
   };
 
   useEffect(() => {
@@ -56,12 +67,12 @@ export default function ProductList() {
     {
       field: "tenSP",
       headerName: "Tên sản phẩm",
-      width: 200,
+      width: 700,
       renderCell: (params) => {
         return (
           <div className="productListItem">
             <img className="productListImg" src={params.row.hinhanh} alt="" />
-            {params.row.name}
+            {params.row.tenSP}
           </div>
         );
       },
@@ -118,6 +129,18 @@ export default function ProductList() {
         );
       },
     },
+    {
+      field: "hang",
+      headerName: "Hãng",
+      width: 120,
+      renderCell: (params) => {
+        return (
+          <div className="productListItem">
+            {params.row.hang}
+          </div>
+        );
+      },
+    },
     // {
     //   field: "status",
     //   headerName: "Trạng thái",
@@ -143,7 +166,7 @@ export default function ProductList() {
             </Link>
             <DeleteOutline
               className="productListDelete"
-              onClick={() => handleDelete(params.row.id)}
+              onClick={() => handleDelete(params.row.id, params.row.tenSP)}
             />
           </>
         );

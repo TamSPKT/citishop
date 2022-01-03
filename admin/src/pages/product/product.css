@@ -137,3 +137,48 @@
   display: flex;
   flex-direction: row;
 }
+
+.newProductItem {
+  width: 400px;
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
+  margin-right: 20px;
+}
+
+.newProductItem > label {
+  margin-bottom: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  color: rgb(151, 150, 150);
+}
+
+.newProductItem > input {
+  height: 20px;
+  padding: 10px;
+  border: 1px solid gray;
+  border-radius: 5px;
+}
+.newProductItem > textarea {
+  height: 120px;
+  padding: 10px;
+  border: 1px solid gray;
+  border-radius: 5px;
+}
+
+.newProductForm {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.addProductButton {
+  width: 820px;
+  margin-top: 10px;
+  padding: 7px 10px;
+  border: none;
+  border-radius: 10px;
+  background-color: rgb(182, 38, 117);;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+}

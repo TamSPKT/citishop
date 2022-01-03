@@ -6,9 +6,10 @@ import { CloudUpload } from "@material-ui/icons";
 import { useState } from "react";
 import { DataGrid } from "@material-ui/data-grid";
 import { DeleteOutline, EditOutlined } from "@material-ui/icons";
+import { useEffect } from "react";
 
 import LoaiSpDataService from "../../services/loaiSp"
-import { useEffect } from "react";
+import SanphamDataService from "../../services/sanpham"
 
 export default function Category() {
   const [data, setData] = useState({});
@@ -22,8 +23,19 @@ export default function Category() {
   const [page, setPage] = useState(0);
   const [loading, setLoading] = useState(false);
 
-  const handleDelete = (id) => {
-    setSanphamList(sanphamList.filter((item) => item._id !== id));
+  const handleDelete = (id, name) => {
+    if (window.confirm(`Bạn có chắc chắn muốn xoá Sản phẩm ${name}, ID ${id}?`)) {
+      SanphamDataService.deleteSanpham(id)
+        .then(res => {
+          if (res.data.response && res.data.response.deletedCount !== 0) {
+            window.location.reload();
+          }
+        })
+        .catch((e) => {
+          console.log(e);
+        })
+    }
+    // setSanphamList(sanphamList.filter((item) => item._id !== id));
   };
 
   useEffect(() => {
@@ -139,17 +151,29 @@ export default function Category() {
       },
     },
     {
-      field: "status",
-      headerName: "Trạng thái",
+      field: "hang",
+      headerName: "Hãng",
       width: 120,
       renderCell: (params) => {
         return (
           <div className="productListItem">
-            {params.row.tranhthai}
+            {params.row.hang}
           </div>
         );
       },
     },
+    // {
+    //   field: "status",
+    //   headerName: "Trạng thái",
+    //   width: 120,
+    //   renderCell: (params) => {
+    //     return (
+    //       <div className="productListItem">
+    //         {params.row.tranhthai}
+    //       </div>
+    //     );
+    //   },
+    // },
 
     {
       field: "action",
@@ -163,7 +187,7 @@ export default function Category() {
             </Link>
             <DeleteOutline
               className="productListDelete"
-              onClick={() => handleDelete(params.row.id)}
+              onClick={() => handleDelete(params.row.id, params.row.tenSP)}
             />
           </>
         );
@@ -179,7 +203,8 @@ export default function Category() {
           <button className="categoryAddButton">Thêm loại sản phẩm</button>
         </Link>
       </div>
-      <div className="categoryBottom">
+
+      {/* <div className="categoryBottom">
         <form className="categoryForm">
           <div className="newcategoryItem">
             <label>Mã loại</label>
@@ -197,9 +222,9 @@ export default function Category() {
             <button className="categoryButton">Cập nhật</button>
           </div>
 
-
         </form>
-      </div>
+      </div> */}
+
       <DataGrid
         rows={sanphamList}
         rowCount={data.total_results}

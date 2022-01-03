@@ -7,7 +7,11 @@ class LoaiSpDataService {
 
   getByID(id, page = 0) {
     return http.get(`/loaiSP/id/${id}/?page=${page}`)
-  } 
+  }
+
+  getByIDWithSpPerPage(id, SpPerPage = 1, page = 0) {
+    return http.get(`/loaiSP/id/${id}/?sanphamPerPage=${SpPerPage}&page=${page}`)
+  }
 
   get(id) {
     return http.get(`/loaiSP/id/${id}`)

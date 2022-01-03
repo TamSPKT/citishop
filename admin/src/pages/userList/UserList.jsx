@@ -14,8 +14,20 @@ export default function UserList() {
   const [page, setPage] = useState(0);
   const [loading, setLoading] = useState(false);
 
-  const handleDelete = (id) => {
-    setUserList(userList.filter((item) => item.id !== id));
+  const handleDelete = (id, username) => {
+    if (window.confirm(`Bạn có chắc chắn muốn xoá User ${username}, ID ${id}?`)) {
+      UserDataService.deleteUser(username)
+        .then(res => {
+          if (res.data.response && res.data.response.deletedCount !== 0) {
+            window.location.reload();
+          }
+        })
+        .catch((e) => {
+          console.log(e);
+        })
+    }
+    // window.location.reload();
+    // setUserList(userList.filter((item) => item.id !== id));
   };
 
   useEffect(() => {
@@ -78,26 +90,34 @@ export default function UserList() {
     {
       field: "gioitinh",
       headerName: "Giới tính",
-      width: 140,
+      width: 130,
     },
-    // {
-    //   field: "ngaysinh",
-    //   headerName: "Ngày sinh",
-    //   width: 160,
-    //   renderCell: (params) => {
-    //     return (
-    //       <div className="productListItem">
-    //         {new Date(params.row.ngaysinh).toLocaleDateString()}
-    //       </div>
-    //     );
-    //   },
-    // },
+    {
+      field: "ngaysinh",
+      headerName: "Ngày sinh",
+      width: 135,
+      renderCell: (params) => {
+        return (
+          <div className="productListItem">
+            {/* {new Date(params.row.ngaysinh).toLocaleDateString()} */}
+            {String(params.row.ngaysinh).substring(0, 10)}
+          </div>
+        );
+      },
+    },
     {
       field: "phanquyen",
       headerName: "Quyền",
       width: 160,
+      renderCell: (params) => {
+        return (
+          <div className="productListItem">
+            {params.row.phanquyen ? "Hoạt động" : "Khoá"}
+          </div>
+        );
+      },
     },
-    
+
     {
       field: "action",
       headerName: "Hành động",
@@ -110,7 +130,7 @@ export default function UserList() {
             </Link>
             <DeleteOutline
               className="userListDelete"
-              onClick={() => handleDelete(params.row.id)}
+              onClick={() => handleDelete(params.row.id, params.row.username)}
             />
           </>
         );

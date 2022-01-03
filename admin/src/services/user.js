@@ -18,14 +18,19 @@ class UserDataService {
   }
 
   updateUser(data) {
-    return http.put(`/users/id/${data._id}`, {
-      tenloaiSP: data.tenloaiSP,
-      mota: data.mota
+    return http.put(`/users/name/${data.username}`, {
+      password: data.password,
+      email: data.email,
+      sdt: data.sdt,
+      gioitinh: data.gioitinh,
+      ngaysinh: data.ngaysinh,
+      diachi: data.diachi,
+      phanquyen: data.phanquyen,
     });
   }
 
-  deleteUser(id) {
-    return http.delete(`/users/id/${id}`);
+  deleteUser(username) {
+    return http.delete(`/users/name/${username}`);
   }
 }
 

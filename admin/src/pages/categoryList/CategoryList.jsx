@@ -14,8 +14,31 @@ export default function CategoryList() {
   const [page, setPage] = useState(0);
   const [loading, setLoading] = useState(false);
 
-  const handleDelete = (id) => {
-    setLoaiSpList(loaiSpList.filter((item) => item.id !== id));
+  const handleDelete = (id, tenloaiSP) => {
+    LoaiSpDataService.getByIDWithSpPerPage(id)
+      .then(res => {
+        let sanphams = Number(res.data.total_results);
+        if (sanphams > 0) {
+          window.alert(`Không thể xoá Loại SP ${tenloaiSP}, ID ${id} do có chứa ${sanphams} sản phẩm.`);
+          return;
+        }
+
+        if (window.confirm(`Bạn có chắc chắn muốn xoá Loại SP ${tenloaiSP}, ID ${id}?`)) {
+          LoaiSpDataService.deleteLoaiSp(id)
+            .then(res => {
+              if (res.data.response && res.data.response.deletedCount !== 0) {
+                window.location.reload();
+              }
+            })
+            .catch((e) => {
+              console.log(e);
+            })
+        }
+      })
+      .catch((e) => {
+        console.log(e);
+      })
+    // setLoaiSpList(loaiSpList.filter((item) => item.id !== id));
   };
 
   useEffect(() => {
@@ -80,7 +103,7 @@ export default function CategoryList() {
             <Link to='/category'>
               <ClearOutlined
                 className="categoryListDelete"
-                onClick={() => handleDelete(params.row.id)}
+                onClick={() => handleDelete(params.row.id, params.row.tenloaiSP)}
               />
             </Link>
 
