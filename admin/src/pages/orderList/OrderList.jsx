@@ -1,19 +1,68 @@
 import "./orderList.css";
 import { DataGrid } from "@material-ui/data-grid";
-import { DeleteOutline,EditOutlined } from "@material-ui/icons";
+import { DeleteOutline, EditOutlined } from "@material-ui/icons";
 import { orderRows } from "../../dummyData";
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+
+import HoadonDataService from "../../services/hoadon"
 
 export default function OrderList() {
-  const [data, setData] = useState(orderRows);
+  const [data, setData] = useState({});
+  const [hoadonList, setHoadonList] = useState([]);
+
+  const [page, setPage] = useState(0);
+  const [loading, setLoading] = useState(false);
 
   const handleDelete = (id) => {
-    setData(data.filter((item) => item.id !== id));
+    if (window.confirm(`Bạn có chắc chắn muốn xoá Hoá đơn ID ${id}?`)) {
+      HoadonDataService.deleteHoadon(id)
+        .then(res => {
+          if (res.data.response && res.data.response.deletedCount !== 0) {
+            window.location.reload();
+          }
+        })
+        .catch((e) => {
+          console.log(e);
+        })
+    }
+    // setData(data.filter((item) => item.id !== id));
+  };
+
+  useEffect(() => {
+    retrieveOrders();
+  }, [])
+
+  useEffect(() => {
+    setLoading(true);
+    retrieveOrders(page);
+    setTimeout(() => {
+      setLoading(false);
+    }, 1000);
+  }, [page]);
+
+  const retrieveOrders = (page) => {
+    HoadonDataService.getAll(page)
+      .then(res => {
+        // console.log(res.data);
+        let hoadonList = res.data.hoadon.map((hd) => {
+          return { ...hd, id: hd._id }
+        })
+        setData(res.data);
+        setHoadonList(hoadonList);
+      })
+      .catch((e) => {
+        console.log(e);
+      })
+  }
+
+  const handlePageChange = (newPage) => {
+    // console.log(newPage)
+    setPage(newPage);
   };
 
   const columns = [
-    { field: "id", headerName: "ID", width: 90 },
+    { field: "id", headerName: "ID", width: 200 },
     {
       field: "tenSP",
       headerName: "Tài khoản",
@@ -31,7 +80,8 @@ export default function OrderList() {
       renderCell: (params) => {
         return (
           <div className="orderListItem">
-            {params.row.ngayDat}
+            {/* {params.row.ngayDat} */}
+            {new Date(params.row.ngayDat).toUTCString()}
           </div>
         );
       },
@@ -63,24 +113,22 @@ export default function OrderList() {
       renderCell: (params) => {
         return (
           <div className="orderListItem">
-            {params.row.tongHoaDon}
+            {params.row.tongHoaDon + 30000}
           </div>
         );
       },
     },
     {
-      field: "status",
-      headerName: "Trạng thái",
-      width: 120,
+      field: "trangThai", headerName: "Trạng thái", width: 160,
       renderCell: (params) => {
         return (
           <div className="orderListItem">
-            {params.row.tranhthai}
+            {params.row.trangThai}
           </div>
         );
       },
     },
-    
+
     {
       field: "action",
       headerName: "Action",
@@ -89,7 +137,7 @@ export default function OrderList() {
         return (
           <>
             <Link to={"/order/" + params.row.id}>
-            <EditOutlined className="orderListEdit"/>
+              <EditOutlined className="orderListEdit" />
             </Link>
             <DeleteOutline
               className="orderListDelete"
@@ -105,11 +153,17 @@ export default function OrderList() {
     <div className="orderList">
       <h2 className="nameTitle" >Danh sách đơn hàng</h2>
       <DataGrid
-        rows={data}
+        rows={hoadonList}
+        rowCount={data.total_results}
         disableSelectionOnClick
         columns={columns}
-        pageSize={8}
+        pageSize={data.entries_per_page}
+        // rowsPerPageOptions={[5, 10, 20]}
+        paginationMode="server"
+        onPageChange={handlePageChange}
         checkboxSelection
+        pagination
+        loading={loading}
       />
     </div>
   );
