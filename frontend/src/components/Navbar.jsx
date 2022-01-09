@@ -87,6 +87,7 @@ const Navbar = () => {
     // console.log(user.currentUser);
     localStorage.removeItem('persist:root');
     // console.log(user.currentUser);
+    history.push("/")
     window.location.reload()
   }
 

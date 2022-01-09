@@ -5,11 +5,11 @@ import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import Newsletter from "../components/Newsletter";
 import { mobile } from "../responsive";
-import { useLocation } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 // import { publicRequest } from "../requestMethods";
 import { addProduct } from "../redux/cartRedux";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import SanphamDataService from "../services/sanpham";
 
@@ -44,6 +44,7 @@ const Title = styled.h1`
 
 const Desc = styled.p`
   margin: 20px 0px;
+  white-space: pre-wrap;
 `;
 
 const Price = styled.span`
@@ -130,6 +131,9 @@ const Product = () => {
   const [color, setColor] = useState("");
   const [size, setSize] = useState("");
   const dispatch = useDispatch();
+
+  const history = useHistory();
+  const user = useSelector((state) => state.user.currentUser);
   // console.log("pages/Product", location);
 
   useEffect(() => {
@@ -164,9 +168,14 @@ const Product = () => {
   };
 
   const handleClick = () => {
-    dispatch(
-      addProduct({ ...product, quantity, size })
-    );
+    if (!user) {
+      history.push("/login");
+    } else {
+      dispatch(
+        addProduct({ ...product, quantity, size })
+      );
+      history.push("/cart");
+    }
   };
   return (
     <Container>
@@ -179,7 +188,8 @@ const Product = () => {
           <Title>{product.tenSP}</Title>
           <Desc>{product.mota}</Desc>
           <b>Số lượng: {product.soluong}</b><br /><br />
-          <Price>Giá: {product.gia} đ</Price>
+          <b>Giảm: {product['%giam']}%</b><br /><br />
+          <Price>Giá: {product.gia} đ</Price><br />
           <FilterContainer>
             <Filter>
               <FilterTitle>Loại size</FilterTitle>

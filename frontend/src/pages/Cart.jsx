@@ -1,5 +1,5 @@
 import { Add, Remove } from "@material-ui/icons";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import Announcement from "../components/Announcement";
 import Footer from "../components/Footer";
@@ -9,6 +9,12 @@ import StripeCheckout from "react-stripe-checkout";
 import { useEffect, useState } from "react";
 import { userRequest } from "../requestMethods";
 import { useHistory } from "react-router";
+import { Link } from "react-router-dom";
+
+import { addProduct, removeProduct } from "../redux/cartRedux";
+
+// import PaymentDataService from "../services/payment";
+import HoadonDataService from "../services/hoadon";
 
 const KEY = process.env.REACT_APP_STRIPE;
 
@@ -161,9 +167,36 @@ const Button = styled.button`
 
 const Cart = () => {
   const cart = useSelector((state) => state.cart);
+  const user = useSelector((state) => state.user.currentUser);
   const [stripeToken, setStripeToken] = useState(null);
   const history = useHistory();
+  const dispatch = useDispatch();
   console.log("pages/Cart - cart", cart);
+  // console.log("pages/Cart - cart.products.length", cart.products.length);
+  console.log("pages/Cart - user", user);
+  // console.log("pages/Cart - process.env", process.env);
+
+  const handleAddQuantity = (id) => {
+    // console.log(id);
+    let product = cart.products.find((elem) => {
+      return elem._id === id
+    })
+    dispatch(
+      addProduct({ ...product, quantity: 1 })
+    );
+    window.location.reload();
+  }
+
+  const handleRemoveQuantity = (id) => {
+    // console.log(id);
+    let product = cart.products.find((elem) => {
+      return elem._id === id
+    })
+    dispatch(
+      removeProduct({ ...product, quantity: 1 })
+    );
+    window.location.reload();
+  }
 
   const onToken = (token) => {
     setStripeToken(token);
@@ -172,33 +205,63 @@ const Cart = () => {
   useEffect(() => {
     const makeRequest = async () => {
       try {
-        const res = await userRequest.post("/checkout/payment", {
-          tokenId: stripeToken.id,
-          amount: 500,
-        });
+        console.log("pages/Cart - stripeToken", stripeToken)
+        const products = cart.products.map(item => {
+          return {
+            sanphamID: item._id,
+            // tenSP: item.tenSP,
+            // gia: item.gia,
+            soluongMua: item.quantity,
+          }
+        })
+        // const res = await userRequest.post("/checkout/payment", {
+        //   tokenId: stripeToken.id,
+        //   amount: 500,
+        // });
+        // const res = await PaymentDataService.createCharges({
+        //   stripeTokenId: stripeToken.id,
+        //   amount: cart.total
+        // })
+        const hoadonDoc = {
+          username: user.username,
+          nguoiNhan: stripeToken.card.name,
+          sdt: user.sdt,
+          diachi: user.diachi,
+          giamHD: 0,
+          kieuThanhToan: "Ship COD",
+          sanphamList: products,
+          stripeToken: stripeToken,
+        }
+        // console.log(hoadonDoc);
+        const res = await HoadonDataService.createHoadon(hoadonDoc)
         history.push("/success", {
-          stripeData: res.data,
-          products: cart,
+          // stripeData: res.data,
+          // stripeData: stripeToken,
+          hoadonData: res.data,
+          // products: products,
+          cart: cart,
         });
       } catch (e) {
-        console.log(e);
+        console.log("makeRequest", e);
       }
     };
     stripeToken && makeRequest();
   }, [stripeToken, cart.total, history]);
+
+
   return (
     <Container>
       <Announcement />
       <Wrapper>
         <Title>Giỏ hàng của bạn</Title>
         <Top>
-          <TopButton>Tiếp tục mua sắm</TopButton>
+          <Link to='/'>Tiếp tục mua sắm</Link>
           <TopButton type="filled">Thanh toán</TopButton>
         </Top>
         <Bottom>
           <Info>
             {cart.products.map((product, index) => (
-              <Product>
+              <Product key={product._id}>
                 <ProductDetail>
                   <Image src={product.hinhanh} />
                   <Details>
@@ -215,9 +278,9 @@ const Cart = () => {
                 </ProductDetail>
                 <PriceDetail>
                   <ProductAmountContainer>
-                    {/* <Add /> */}
+                    <Add onClick={() => handleAddQuantity(product._id)} />
                     <ProductAmount>Số lượng: {product.quantity}</ProductAmount>
-                    {/* <Remove /> */}
+                    <Remove onClick={() => handleRemoveQuantity(product._id)} />
                   </ProductAmountContainer>
                   <ProductPrice>
                     {product.gia * product.quantity} vnd
@@ -244,18 +307,23 @@ const Cart = () => {
             <SummaryItem type="total">
               <SummaryItemText>Tổng tiền</SummaryItemText>
               <SummaryItemPrice>{cart.total + 30000} vnd</SummaryItemPrice>
+              {/* <SummaryItemPrice>{cart.total} vnd</SummaryItemPrice> */}
             </SummaryItem>
             <StripeCheckout
               name="CiTi Shop"
               image="https://avatars.githubusercontent.com/u/1486366?v=4"
               billingAddress
               shippingAddress
-              description={`Tổng tiền ${cart.total} vnd`}
-              amount={cart.total * 100}
+              email={user.email}
+              // description={`Tổng tiền ${cart.total} vnd`}
+              description={`Tổng tiền ${cart.total + 30000} vnd`}
+              // amount={cart.total}
+              amount={cart.total + 30000}
               token={onToken}
+              currency="VND"
               stripeKey={KEY}
             >
-              <Button>Thanh toán ngay</Button>
+              <Button disabled={cart.products.length === 0}>Thanh toán ngay</Button>
             </StripeCheckout>
           </Summary>
         </Bottom>
