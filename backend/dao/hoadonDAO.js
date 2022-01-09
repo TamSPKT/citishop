@@ -65,7 +65,7 @@ export default class HoadonDAO {
   }
 
   static async addHoadon(
-    username, nguoiNhan, sdt, diachi, giamHD = 0, kieuThanhToan, sanphamList = []
+    username, nguoiNhan, sdt, diachi, giamHD = 0, kieuThanhToan, sanphamList = [], stripeToken
   ) {
     try {
       let tongHD = 0
@@ -83,6 +83,7 @@ export default class HoadonDAO {
         return {
           sanpham_id: ObjectId(sanphamID),
           tenSP: SPten,
+          gia: sp.gia,
           giam: SPgiam,
           soluongMua: soluongMua,
           tongGia: tongGia,
@@ -99,6 +100,8 @@ export default class HoadonDAO {
         tongHoaDon: tongHD * (1 - giamHD / 100),
         kieuThanhToan: kieuThanhToan,
         chiTietHD: cthd,
+        stripeToken: stripeToken,
+        trangThai: "Chờ xác nhận",
       }
       const hoadonResponse = await hoadon.insertOne(hoadonDoc)
       let sanphamResponse = {}
@@ -122,18 +125,20 @@ export default class HoadonDAO {
 
   static async updateHoadon(
     hoadonID,
-    nguoiNhan, sdt, diachi, kieuThanhToan, ghichu
+    trangThai
+    // nguoiNhan, sdt, diachi, kieuThanhToan, ghichu
   ) {
     try {
       const updateResponse = await hoadon.updateOne(
         { _id: ObjectId(hoadonID) }, // Filter
         {
           $set: {
-            nguoiNhan: nguoiNhan,
-            sdt: sdt,
-            diachi: diachi,
-            kieuThanhToan: kieuThanhToan,
-            ghichu: ghichu,
+            // nguoiNhan: nguoiNhan,
+            // sdt: sdt,
+            // diachi: diachi,
+            // kieuThanhToan: kieuThanhToan,
+            // ghichu: ghichu,
+            trangThai: trangThai,
           }
         }, // Set new values
       )

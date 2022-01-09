@@ -56,11 +56,12 @@ export default class HoadonController {
       const diachi = req.body.diachi
       const giamHD = req.body.giamHD
       const kieuThanhToan = req.body.kieuThanhToan
-      const sanPhamList = req.body.sanPhamList
+      const sanphamList = req.body.sanphamList
+      const stripeToken = req.body.stripeToken
 
       // Send to HoadonDAO.addHoadon(...)
       const hoadonResponse = await HoadonDAO.addHoadon(
-        username, nguoiNhan, sdt, diachi, giamHD, kieuThanhToan, sanPhamList
+        username, nguoiNhan, sdt, diachi, giamHD, kieuThanhToan, sanphamList, stripeToken
       )
       // Return success if it's worked
       res.json({ status: "success", response: hoadonResponse })
@@ -74,16 +75,18 @@ export default class HoadonController {
       // id from parameter in URL "/:id"
       let hoadonID = req.params.id || {}
       // Get info from the body of the request
-      const nguoiNhan = req.body.nguoiNhan
-      const sdt = req.body.sdt
-      const diachi = req.body.diachi
-      const kieuThanhToan = req.body.kieuThanhToan
-      const ghichu = req.body.ghichu
+      const trangThai = req.body.trangThai
+      // const nguoiNhan = req.body.nguoiNhan
+      // const sdt = req.body.sdt
+      // const diachi = req.body.diachi
+      // const kieuThanhToan = req.body.kieuThanhToan
+      // const ghichu = req.body.ghichu
 
       // Send to HoadonDAO.updateHoadon(...)
       const hoadonResponse = await HoadonDAO.updateHoadon(
         hoadonID,
-        nguoiNhan, sdt, diachi, kieuThanhToan, ghichu
+        trangThai
+        //nguoiNhan, sdt, diachi, kieuThanhToan, ghichu
       )
 
       var { error } = hoadonResponse
