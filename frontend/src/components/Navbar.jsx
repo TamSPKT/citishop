@@ -5,6 +5,7 @@ import styled from "styled-components";
 import { mobile } from "../responsive";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
+import { useState } from "react";
 
 import logo from "../assets/images/logo.png";
 const Container = styled.div`
@@ -82,6 +83,8 @@ const Navbar = () => {
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
+  const [search, setSearch] = useState("");
+
   const handleLogout = (e) => {
     // e.preventDefault();
     // console.log(user.currentUser);
@@ -102,8 +105,8 @@ const Navbar = () => {
         </Left>
         <Center>
           <SearchContainer>
-            <Input placeholder="Tìm kiếm..." />
-            <Link to="/result">
+            <Input placeholder="Tìm kiếm..." onChange={(e) => setSearch(e.target.value)} />
+            <Link to={`/result/${search}`}>
               <Search style={{ color: "gray", fontSize: 16 }} />
             </Link>
           </SearchContainer>
