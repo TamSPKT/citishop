@@ -118,39 +118,45 @@ const ProductList = props => {
   return (
     <Container>
       <Announcement />
-      <Title>Danh sách sản phẩm</Title>
-      <FilterContainer>
-        <Filter>
-          <FilterText>Bộ lọc</FilterText>
-
-          <Select name="phanLoai" onChange={handleFilters}>
-            <Option>Tất cả sản phẩm</Option>
-            {loaiSp.map(item => <Option key={item._id} value={item._id}>{item.tenloaiSP}</Option>)}
-            {/* <Option disabled>Phân loại</Option>
-            <Option>Sữa rửa mặt</Option>
-            <Option>Tẩy trang</Option>
-            <Option>Kem chống nắng</Option>
-            <Option>Serum</Option>
-            <Option>Son</Option>
-            <Option>Sữa dưỡng thể</Option> */}
-          </Select>
-
-          {/* <Select name="size" onChange={handleFilters}>
-            <Option disabled>Size</Option>
-            <Option>40ml</Option>
-            <Option>500ml</Option>
-          </Select> */}
-
-        </Filter>
-        {/* <Filter>
-          <FilterText>Sắp xếp</FilterText>
-          <Select onChange={(e) => setSort(e.target.value)}>
-            <Option value="newest">Mới nhất</Option>
-            <Option value="asc">Giá tăng</Option>
-            <Option value="desc">Giá giảm</Option>
-          </Select>
-        </Filter> */}
-      </FilterContainer>
+      {
+        search
+        ? <><Title>Tìm kiếm theo từ khoá tên sản phẩm: "{search}"</Title>
+        </>
+        : <><Title>Danh sách sản phẩm</Title>
+        <FilterContainer>
+          <Filter>
+            <FilterText>Bộ lọc</FilterText>
+  
+            <Select name="phanLoai" onChange={handleFilters}>
+              <Option>Tất cả sản phẩm</Option>
+              {loaiSp.map(item => <Option key={item._id} value={item._id}>{item.tenloaiSP}</Option>)}
+              {/* <Option disabled>Phân loại</Option>
+              <Option>Sữa rửa mặt</Option>
+              <Option>Tẩy trang</Option>
+              <Option>Kem chống nắng</Option>
+              <Option>Serum</Option>
+              <Option>Son</Option>
+              <Option>Sữa dưỡng thể</Option> */}
+            </Select>
+  
+            {/* <Select name="size" onChange={handleFilters}>
+              <Option disabled>Size</Option>
+              <Option>40ml</Option>
+              <Option>500ml</Option>
+            </Select> */}
+  
+          </Filter>
+          {/* <Filter>
+            <FilterText>Sắp xếp</FilterText>
+            <Select onChange={(e) => setSort(e.target.value)}>
+              <Option value="newest">Mới nhất</Option>
+              <Option value="asc">Giá tăng</Option>
+              <Option value="desc">Giá giảm</Option>
+            </Select>
+          </Filter> */}
+        </FilterContainer></>
+      }
+      
       <Products productsList={productsList} filters={filters} sort={sort} />
       <Newsletter />
       <Footer />
