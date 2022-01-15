@@ -5,7 +5,7 @@ import Products from "../components/Products";
 import Newsletter from "../components/Newsletter";
 import Footer from "../components/Footer";
 import { mobile } from "../responsive";
-import { useLocation } from "react-router";
+import { useLocation, useParams } from "react-router";
 import { useEffect, useState } from "react";
 
 import LoaiSpDataService from "../services/loaiSp";
@@ -43,6 +43,9 @@ const Option = styled.option``;
 
 const ProductList = props => {
   const location = useLocation();
+  const { search } = useParams();
+  // console.log(search);
+
   // const loaiSP_id = location.pathname.split("/")[2]; // props.state.categoryID;
   const cat = location.pathname.split("/")[2];
   const [filters, setFilters] = useState({});
@@ -82,14 +85,24 @@ const ProductList = props => {
 
   useEffect(() => {
     retrieveLoaiSp();
-    SanphamDataService.getAll()
-      .then(res => {
-        setProductsList(res.data.sanpham);
-      })
-      .catch(e => {
-        console.log(e);
-      })
-  }, [])
+    if (search) {
+      SanphamDataService.find(search)
+        .then(res => {
+          setProductsList(res.data.sanpham);
+        })
+        .catch(e => {
+          console.log(e);
+        })
+    } else {
+      SanphamDataService.getAll()
+        .then(res => {
+          setProductsList(res.data.sanpham);
+        })
+        .catch(e => {
+          console.log(e);
+        })
+    }
+  }, [search])
 
   const retrieveLoaiSp = () => {
     LoaiSpDataService.getAll()

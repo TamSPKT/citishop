@@ -44,6 +44,9 @@ const App = () => {
           {/* {user ? <Redirect to="/" /> : <Register />} */}
           <Register />
         </Route>
+        <Route path="/result/:search">
+          <ProductList />
+        </Route>
         <Route path="*" exact component={NotFound} />
       </Switch>
     </Router>
