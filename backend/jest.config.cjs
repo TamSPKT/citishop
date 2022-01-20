@@ -6,4 +6,5 @@ module.exports = {
   },
   // automock: true,
   verbose: true,
+  collectCoverage: true,
 }
